@@ -2,9 +2,7 @@
 
 > Official repository for **"Unlocking the Black Box of Latent Reasoning: An Interpretability-Guided Approach to Intervention"**, accepted to **ACL 2026 Main**.
 
-Official implementation of **Interpretable Latent Intervention**, an interpretability-guided framework for analyzing and intervening in latent reasoning trajectories of language models.
-
-📄 **Paper:** [`paper/Interpretable_Latent_Intervention_ACL2026.pdf`](paper/Interpretable_Latent_Intervention_ACL2026.pdf) — the section/equation references throughout this README point to this file.
+📄 **Paper:** [`paper/Interpretable_Latent_Intervention_ACL2026.pdf`](paper/Interpretable_Latent_Intervention_ACL2026.pdf)
 
 ## 📋 Overview
 
@@ -44,26 +42,6 @@ We convert the interpretability findings into training-free decode-time interven
 - Training-free decode-time interventions can improve reasoning accuracy without parameter updates.
 - Experiments cover multiple model scales and reasoning domains, including mathematical and commonsense reasoning benchmarks.
 
-## 🧩 Interventions
-
-All interventions are training-free, operate on **cached** continuous thoughts at
-decode time, and follow the unified update rule (Algorithm 1):
-
-```
-v*      = Phi(z_k)                              # guidance prior
-d       = v* - z_k
-z_steer = z_k + alpha * (d / ||d||) * ||z_k||   # norm-scaled directional step
-z'_k    = (1 - lam) * z_steer + lam * Omega(z_steer)   # manifold regularization
-```
-
-| Flag | Name | Paper | Prior `Phi` / Constraint `Omega` |
-|------|------|-------|----------------------------------|
-| `none` | Baseline | – | write cached latents, no edit |
-| `mapper` | Semantic Structure Transport | §4.2, Eq. 12 | `Phi`=mapper `f_phi`, `Omega`=embedding-subspace projection |
-| `slerp` | Answer-Anchored Slerp | §4.3, Eq. 13 | norm-preserving rotation of the causal hub `z_2` toward a retrieved anchor |
-| `gradient` | Answer-Directed Gradient Update | §4.3, Eq. 14 | `Phi`=`z - eta·∇L`, `Omega`=norm projection |
-| `wt_proj` | Weight-Tying Consistent Projection | §4.4, Eq. 15 | mix with `E^T softmax(o/tau)` |
-| `energy` | Energy-Guided Local Descent | §4.4, Eq. 16 | trust-region descent on energy `H` |
 
 ## 🗂️ Repository Structure
 
@@ -103,8 +81,7 @@ pip install -e .                   # optional: exposes the `ili` package
 You will also need a trained latent-reasoning backbone, i.e. a **CoConut** or
 **CODI** checkpoint (`--ckpt_path`) on top of a base model such as
 `Qwen/Qwen3-8B`, `meta-llama/Llama-3.1-8B`, or `meta-llama/Llama-3.2-3B`. We
-follow the official CoConut/CODI training recipes (K = 6 latent slots; see paper
-Appendix A).
+follow the official CoConut/CODI training recipes (K = 6 latent slots.
 
 ### Step 1 — Prepare your dataset
 
