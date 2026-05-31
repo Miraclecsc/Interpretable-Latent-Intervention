@@ -1,0 +1,43 @@
+# Reference configuration. The defaults below are the optimal hyper-parameters
+# from Table 6 (grid-searched on Qwen3-8B / CoConut, then held fixed across all
+# model scales and datasets). The CLI exposes every field as a flag; this file
+# is provided for documentation and reproducibility.
+
+paths:
+  model_base: Qwen/Qwen3-8B          # backbone HF id or local path
+  ckpt_path: ckpt/coconut_qwen3.pt   # trained latent-reasoning checkpoint
+  test_path: data/gsm8k_test.json    # {question, steps, answer}
+  latent_root: cache/gsm8k           # cached continuous thoughts (per case)
+  mapper_path: ckpt/mapper.pt        # required for intervention=mapper
+  energy_path: ckpt/energy.pt        # required for intervention=energy
+  anchor_root: ""                    # exemplar latents for slerp (defaults to latent_root)
+
+runtime:
+  num_latent: 6                      # K
+  max_new_tokens: 128
+  use_bf16: true
+  paradigm: coconut                  # coconut | codi
+
+interventions:
+  # A. Semantic Structure Transport (Sec. 4.2)
+  mapper:
+    alpha: 0.15
+    eta_norm: 0.25
+    lambda: 0.0
+    beta_residual: 1.0
+    pc_rank: 1024
+  # B.1 Answer-Anchored Slerp (Sec. 4.3, Eq. 13)
+  slerp:
+    alpha: 0.10
+  # B.2 Answer-Directed Gradient Update (Sec. 4.3, Eq. 14)
+  gradient:
+    eta: 0.20
+  # C.1 Weight-Tying Consistent Projection (Sec. 4.4, Eq. 15)
+  wt_proj:
+    alpha: 0.20
+    tau: 1.0
+  # C.2 Energy-Guided Local Descent (Sec. 4.4, Eq. 16)
+  energy:
+    eta: 0.002
+    radius_ratio: 0.25
+    steps: 1

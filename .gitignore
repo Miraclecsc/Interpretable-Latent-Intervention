@@ -5,7 +5,12 @@ __pycache__/
 venv/
 outputs/
 checkpoints/
+ckpt/
+cache/
 runs/
 wandb/
+build/
+dist/
+*.egg-info/
 .env
 .env.*
