@@ -1,64 +1,54 @@
 # Interpretable Latent Intervention
 
-Official repository for **"Unlocking the Black Box of Latent Reasoning: An Interpretability-Guided Approach to Intervention"**, accepted to **ACL 2026 Main**.
+> Official repository for **"Unlocking the Black Box of Latent Reasoning: An Interpretability-Guided Approach to Intervention"**, accepted to **ACL 2026 Main**.
 
-This project studies how latent reasoning unfolds inside continuous hidden states, and how those states can be interpreted and intervened on at decode time. Instead of treating latent thoughts as opaque vectors, we analyze their structure, semantic content, and causal role, then use the resulting observations to design training-free interventions that improve reasoning.
+Official implementation of **Interpretable Latent Intervention**, an interpretability-guided framework for analyzing and intervening in latent reasoning trajectories of language models.
+
+## 📋 Overview
+
+Latent reasoning enables language models to perform multi-step inference through continuous hidden states rather than explicit Chain-of-Thought tokens. While this paradigm can reduce decoding cost, it also makes the reasoning process harder to inspect, understand, and control.
+
+This project investigates how latent reasoning unfolds inside continuous representations. Instead of treating latent thoughts as opaque vectors, we analyze their geometric structure, semantic content, and causal role in reasoning. Based on these observations, we further design training-free decode-time interventions that steer latent reasoning trajectories without updating model parameters.
 
 <p align="center">
   <img src="assets/coconut.pdf.png" width="88%" alt="Explicit reasoning versus latent reasoning">
 </p>
 
-## Overview
+## 🔍 Method
 
-Latent reasoning allows language models to perform multi-step inference through continuous internal states rather than explicit Chain-of-Thought tokens. This can reduce decoding cost, but it also makes the reasoning process harder to inspect or control.
+We study latent reasoning from two complementary perspectives:
 
-We approach this problem in two stages:
+### Interpretation
 
-1. **Interpretation.** We probe latent thought vectors using structural alignment, linear recoverability, lexical probing, and causal interventions. The results show that latent vectors encode compressed semantic representations of reasoning steps, with early latent states playing a particularly important causal role.
-2. **Intervention.** We convert these interpretability findings into training-free, decode-time interventions that steer latent reasoning trajectories without updating model parameters.
+We probe latent thought vectors through structural alignment, linear recoverability, lexical probing, and causal intervention analysis. Our findings suggest that latent vectors encode compressed semantic representations of intermediate reasoning steps, with early latent states playing a particularly important causal role in determining the final answer.
 
 <p align="center">
   <img src="assets/alignment.pdf.png" width="78%" alt="Alignment between latent thoughts and explicit reasoning representations">
 </p>
 
-## Highlights
+### Intervention
 
-- Latent thought vectors exhibit strong geometric alignment with explicit reasoning states.
-- Reasoning-step representations are linearly recoverable from latent vectors.
-- Early latent states act as causal hubs for the final answer.
-- Simple decode-time interventions can improve reasoning accuracy without parameter updates.
-- Experiments cover multiple model scales and reasoning domains, including mathematical reasoning and commonsense reasoning benchmarks.
+We convert the interpretability findings into training-free decode-time interventions. These interventions operate directly on latent reasoning states and steer the model's internal reasoning trajectory without modifying model parameters.
 
 <p align="center">
   <img src="assets/intervention_gains.pdf.png" width="78%" alt="Decode-time intervention gains">
 </p>
 
-## Repository Status
+## ✨ Highlights
 
-The codebase is being organized for public release.
+- Latent thought vectors exhibit strong geometric alignment with explicit reasoning states.
+- Reasoning-step representations are linearly recoverable from latent vectors.
+- Early latent states act as causal hubs for the final answer.
+- Training-free decode-time interventions can improve reasoning accuracy without parameter updates.
+- Experiments cover multiple model scales and reasoning domains, including mathematical and commonsense reasoning benchmarks.
 
-Planned components:
+## 🚀 Repository Status
 
-- latent-reasoning inference utilities;
-- probing and alignment scripts;
-- causal intervention tools;
-- decode-time intervention implementations;
-- experiment configs and evaluation scripts;
-- processed figure-generation scripts.
+- [x] Project page and README
+- [x] Main figures and qualitative illustrations
+- [ ] Paper release
+- [ ] Inference code release
 
-The current repository is a landing page for the paper and will be updated with code and checkpoints as they are prepared for release.
+## 📄 Citation 
 
-## Citation
-
-```bibtex
-@inproceedings{chang2026latentintervention,
-  title = {Unlocking the Black Box of Latent Reasoning: An Interpretability-Guided Approach to Intervention},
-  author = {Chang, Shuochen and Bai, Tong and Zhang, Xiaofeng and Ma, Qianli and Liu, Qingyang and Liao, Zhaohe and Miao, Yibo and Niu, Li},
-  booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics},
-  year = {2026}
-}
-```
-
-## License
-
-The license will be finalized with the code release.
+If you find this work useful in your research, please stay tuned for updates: The paper and inference code will be released soon.
