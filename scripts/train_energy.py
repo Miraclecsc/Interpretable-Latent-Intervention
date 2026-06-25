@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 """Train the monotone energy function H over the latent chain (Section 3.4).
 
 H is a small MLP optimized with a margin ranking loss (Eq. 11) so that energy
